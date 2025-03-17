@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- اسکریپت اصلی ایتا - باید قبل از همه اسکریپت‌ها لود شود -->
+    <script src="https://developer.eitaa.com/eitaa-web-app.js"></script>
+    <title>برنامک ساده من</title>
+    <style>
+        body {
+            font-family: system-ui;
+            padding: 20px;
+        }
+        .button {
+            padding: 10px 20px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 8px;
+            background-color: #0088cc;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="userInfo"></div>
+    <button class="button" onclick="sendMessage()">ارسال پیام</button>
+
+    <script>
+        // دریافت اطلاعات کاربر
+        window.onload = function() {
+            if (window.Eitaa && window.Eitaa.WebApp) {
+                const user = window.Eitaa.WebApp.initDataUnsafe.user;
+                if (user) {
+                    document.getElementById('userInfo').innerHTML = `
+                        <h2>سلام ${user.first_name}!</h2>
+                        <p>به برنامک من خوش آمدید</p>
+                    `;
+                }
+            }
+        }
+
+        // تابع ارسال پیام
+        function sendMessage() {
+            if (window.Eitaa && window.Eitaa.WebApp) {
+                // ایجاد بازخورد لمسی
+                window.Eitaa.WebApp.HapticFeedback.impactOccurred('medium');
+                
+                // نمایش پیام موفقیت
+                window.Eitaa.WebApp.HapticFeedback.notificationOccurred('success');
+                
+                // می‌توانید از MainButton برای اکشن‌های اصلی استفاده کنید
+                window.Eitaa.WebApp.MainButton.setText('پیام ارسال شد!');
+                window.Eitaa.WebApp.MainButton.show();
+            }
+        }
+    </script>
+</body>
+</html>
